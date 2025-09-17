@@ -3,7 +3,6 @@ Application Streamlit pour le système RAG
 """
 
 import streamlit as st
-import sys
 from pathlib import Path
 
 from src.rag_system import RAGSystem
@@ -88,16 +87,23 @@ def main():
         # Bouton d'initialisation
         if st.button("🚀 Initialiser le Système RAG", type="primary"):
             with st.spinner("Initialisation en cours..."):
-                result = rag_system.initialize(limit=doc_limit)
-
+                def progress_callback(batch_num, total_batches):
+                    st.write(f"📊 Traitement du batch {batch_num}/{total_batches}")
+                
+                result = rag_system.initialize(limit=doc_limit, progress_callback=progress_callback)
+                
                 if result["status"] == "success":
                     st.session_state.initialized = True
                     st.success("✅ Système initialisé avec succès!")
                     st.session_state.docs_info = result["documents_info"]
+                    
+                    # Afficher les statistiques d'embedding si disponibles
+                    if "embedding_stats" in result:
+                        st.info(f"🔧 Embedding: {result['embedding_stats']['success_rate']:.1%} de succès, "
+                               f"{result['embedding_stats']['total_processing_time']:.1f}s, "
+                               f"{result['embedding_stats']['cache_hits']} cache hits")
                 else:
-                    st.error(f"❌ Erreur: {result['message']}")
-
-        # Affichage du statut
+                    st.error(f"❌ Erreur: {result['message']}")        # Affichage du statut
         if hasattr(st.session_state, "initialized") and st.session_state.initialized:
             st.success("🟢 Système prêt")
         else:
