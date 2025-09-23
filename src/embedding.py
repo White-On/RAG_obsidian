@@ -16,7 +16,7 @@ class EmbeddingFactory(ABC):
 
 class EmbeddingOllama(EmbeddingFactory):
     def __init__(self, model: str = "bge-m3"):
-        self.client = ollama.Ollama()
+        self.client = ollama.Client()
         self.model = model
 
     def embed(self, text: str, **kwargs) -> list[float]:

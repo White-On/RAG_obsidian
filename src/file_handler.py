@@ -70,3 +70,31 @@ def split_text(text: str, chunk_size: int = 1000, overlap: int = 200) -> list[st
         start += chunk_size - overlap
 
     return chunks
+
+
+def split_document(
+    document: dict, chunk_size: int = 1000, overlap: int = 200
+) -> list[dict]:
+    """Split a document's content into chunks and return a list of chunked documents."""
+    text = document.get("content", "")
+    chunks = split_text(text, chunk_size, overlap)
+
+    chunked_documents = []
+    for i, chunk in enumerate(chunks):
+        chunked_doc = document.copy()
+        chunked_doc["content"] = chunk
+        chunked_doc["chunk_index"] = i
+        chunked_documents.append(chunked_doc)
+
+    return chunked_documents
+
+
+def split_documents(
+    documents: list[dict], chunk_size: int = 1000, overlap: int = 200
+) -> list[dict]:
+    """Split a list of documents into chunks."""
+    all_chunked_documents = []
+    for document in documents:
+        chunked_docs = split_document(document, chunk_size, overlap)
+        all_chunked_documents.extend(chunked_docs)
+    return all_chunked_documents
