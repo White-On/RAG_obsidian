@@ -51,3 +51,22 @@ def load_files_from_directory(directory_path: Path) -> dict:
         #     print(f" - {uf.name}")
 
     return documents
+
+
+def split_text(text: str, chunk_size: int = 1000, overlap: int = 200) -> list[str]:
+    """Split text into chunks of specified size with overlap."""
+    if chunk_size <= overlap:
+        return [text]  # Avoid infinite loop if overlap >= chunk_size
+
+    chunks = []
+    start = 0
+    text_length = len(text)
+
+    while start < text_length:
+        end = min(start + chunk_size, text_length)
+        chunks.append(text[start:end])
+        if end == text_length:
+            break
+        start += chunk_size - overlap
+
+    return chunks
