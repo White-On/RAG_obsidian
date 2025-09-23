@@ -6,7 +6,7 @@ console = Console()
 
 def main():
     """Main function using the new RAG system"""
-    console.rule("[bold blue]RAG Application with Google Gemini and LangGraph")
+    console.rule("[bold blue]RAG Application - Question Answering")
     
     # Initialize RAG system
     rag_system = RAGSystem()
@@ -28,9 +28,7 @@ def main():
         console.log(f"[bold yellow]Question: {question}")
         
         try:
-            answer = rag_system.ask_question(question)
-            console.rule("[bold green]Response")
-            console.log(answer)
+            rag_system.ask_question(question)
         except Exception as e:
             console.log(f"[bold red]Error: {e}")
     else:
