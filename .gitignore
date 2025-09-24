@@ -2,4 +2,5 @@
 .env
 chroma_langchain_db/
 chroma_db/
+obsidian_test_vault/
 __pycache__/

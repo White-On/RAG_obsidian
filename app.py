@@ -79,11 +79,6 @@ def main():
             help="Nombre maximum de documents à charger",
         )
 
-        # Paramètres de chunking
-        st.subheader("Paramètres de Chunking")
-        chunk_size = st.slider("Taille des chunks", 1000, 10000, 5000, 500)
-        chunk_overlap = st.slider("Chevauchement", 0, 1000, 200, 50)
-
         # Bouton d'initialisation
         if st.button("🚀 Initialiser le Système RAG", type="primary"):
             with st.spinner("Initialisation en cours..."):

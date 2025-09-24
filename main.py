@@ -24,7 +24,7 @@ def main():
         console.log(f"Created {docs_info['total_chunks']} chunks")
         
         # Test with a question
-        question = "What is the third step of a PCA?"
+        question = "What can you tell me about Genshin Impact?"
         console.log(f"[bold yellow]Question: {question}")
         
         try:
